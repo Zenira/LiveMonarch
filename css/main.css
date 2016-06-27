@@ -3,20 +3,111 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+.jumbotron {
+    background-size: 1400px;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url("/img/milkweed_butterfly.jpg");
+    background-position: 0 -150px;
+}
+.jumbotron h1 { color: #FFF; }
+.jumbotron p {
+  color: #CEDBB3;
+  /*text-shadow: 0px 0px 10px #000,0px 0px 15px #000,0px 0px 25px #000;*/
+}
+.emphasis, .jumbotron .emphasis {
+  font-weight: bold;
+  font-size: 24px;
+  color: #FFF;
+  letter-spacing: 1.5px;
+}
+#address {
+	color:#333;
+	background-color:#fd8d03;
+	border:1px solid #b95902;
+	border-radius:5px;
+	padding:5px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.modal.dialog1 { /* customized styles. this way you can have N dialogs, each one with its own size styles */
+    width: 60%;
+    height: 50%;
+    left: 20%; /* ( window's width [100%] - dialog's width [60%] ) / 2 */
+}
+
+/* media query for mobile devices */
+@media ( max-width: 480px ) {
+    .modal.dialog1 {
+        height: 90%;
+        left: 5%; /* ( window's width [100%] - dialog's width [90%] ) / 2 */
+        top: 5%;
+        width: 90%;
+    }
+}
+
+/* split the modal in two divs (header and body) with defined heights */
+.modal .modal-header {
+    height: 10%;
+}
+
+.modal .modal-body {
+    height: 90%;
+}
+
+/* The div inside modal-body is the key; there's where we put the content (which may need the vertical scrollbar) */
+.modal .modal-body div {
+    height: 100%;
+    overflow-y: auto;
+    width: 100%;
+}
 
 
+/*  Bootstrap Additions */
+.modal-header .minimize {margin-top:-2px;margin-right: 10px;}
+button.minimize{-webkit-appearance:none;padding:0;cursor:pointer;background:0 0;border:0}
+.minimize:hover,
+.minimize:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  filter: alpha(opacity=50);
+  opacity: .5;
+}
+.minimize {
+  float: right;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  filter: alpha(opacity=20);
+  opacity: .2;
+}
 
+body.modal-open { padding-right: 0 !important;overflow: inherit;}
 
+.btn-primary {
+    background-image: -webkit-linear-gradient(top,#FD8D03 0,#d06402 100%);
+    background-image: -o-linear-gradient(top,#FD8D03 0,#d06402 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#FD8D03),to(#d06402));
+    background-image: linear-gradient(to bottom,#FD8D03 0,#d06402 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff337ab7', endColorstr='#ff265a88', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+    border-color: #d06402;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #fc9f2e;
+    background-position: 0 0;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #feecd6;
+    background-color: #ef8003;
+    border-color: #b95902;
+}
+.navbar-brand {
+	padding: 20px 15px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+/* Order Form */
+#reviewOrder { border: 1px solid #999; background-color: #f1f1f1; border-radius: 5px; padding: 10px; }

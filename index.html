@@ -6,10 +6,11 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>Live Monarch Foundation - One Seed Can Change the World</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+		<link rel="shortcut icon" href="/favicon.ico">
+        <!--link rel="apple-touch-icon" href="apple-touch-icon.png"-->
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <style>
@@ -36,18 +37,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">Live Monarch Foundation</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
+          <div class="navbar-form navbar-right">
+			<!-- Button trigger modal -->
+			<button id="startChatBtn" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#chatModal">
+			  Live Chat
+			</button>
+		  </div>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
@@ -55,8 +53,8 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+        <p>One seed can change the world.</p>
+        <p class="emphasis">We need you to plant it.</p>
         <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
       </div>
     </div>
@@ -65,26 +63,40 @@
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          <h2>We need your help - plant milkweed everywhere!</h2>
+		  <p>There are two ways to receive milkweed seeds:</p>
+		  <h4>Online Order</h4>
+		  <p><a class="btn btn-default" href="#" role="button" id="orderSeedsBtn" data-toggle="modal" data-target="#orderSeedsModal" onclick="resetOrderSeedForm()">Order seeds &raquo;</a></p>
+		  <h4>Mail</h4>
+          <p>Send a self addressed, stamped envelope for <strong>Milkweed or mixed seeds</strong> appropriate for your area to:</p>
+          <p id="address">Live Monarch - Seed Campaign <span class="year"></span><br />
+			3003-C8 Yamato Road #1015<br />
+			Boca Raton, Florida 33434
+		  </p>
+		  <p>Cash or Check payable to "Live Monarch", 50+ seeds per dollar. Please request the type of seed you want. Instructions will be included.</p>
         </div>
         <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          <h2>Donate to the cause</h2>
+          <p>We truly appreciate every penny and it goes towards the campaign. We do not believe in outrageous "compensation" for staff. 90% of what comes in goes back out in the form of seeds and educational materials that directly benefit the Monarch Butterfly and our shared Environment. Thank you for your support.</p>
+          <p>Donations go towards: School Programs, Printed Materials, Milkweed Seeds & Plants, Postage, Envelopes, Educational Outreach, Web Design, Rent, Tools, an occassional Pizza for the Staff, or coffee for an all night envelope stuffing session :)</p>
+		  <p><a class="btn btn-default" href="#" role="button">Donate &raquo;</a></p>
        </div>
         <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          <h2>What milkweed variety do I need?</h2>
+          <p>We offer both Northern and Southern varieties of milkweed:</p>
+		  <ul>
+			<li>Northern - Syriaca & Speciosa.</li>
+			<li>Southern - Curassavica</li>
+		  </ul>
+		  <p>The variety you select is dependent upon your location. If you are unsure of which variety to order, you can click the button below to find the right variety for your region, or you can select the "Staff Choice" seed option if ordering online.</p>
+          <p><a class="btn btn-default" href="#" role="button">Region search &raquo;</a></p>
         </div>
       </div>
 
       <hr>
 
       <footer>
-        <p>&copy; Company 2015</p>
+        <p>&copy; 2002-<span class="year"></span> LiveMonarch.com LMF</p>
       </footer>
     </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
@@ -101,6 +113,152 @@
             e.src='//www.google-analytics.com/analytics.js';
             r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
             ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+
+            $(document).ready (function() {
+                $('.year').html(new Date().getFullYear()); // Set current year
+				
+				$('#chatModal .modal-body').load('chat.html');
+            });
+			
+			function orderSeeds() {
+				var amount = $('#orderPlaceForm select[name="seed_amount"] option:selected').val();
+				var type = $('#orderPlaceForm select[name="seed_type"] option:selected').val();
+				var share = $('#orderPlaceForm select[name="seed_share"] option:selected').val();
+				var note = $.trim($('#orderPlaceForm textarea[name="order_seeds_note"]').val());
+				
+				var amount_desc = $('#orderPlaceForm select[name="seed_amount"] option:selected').text();
+				var type_desc = $('#orderPlaceForm select[name="seed_type"] option:selected').text();
+				var share_desc = $('#orderPlaceForm select[name="seed_share"] option:selected').text();
+				$.ajax({
+					url: "orderSeeds.php",
+					data: {
+						amount: amount,
+						type: type,
+						share: share,
+						note: note
+					},
+					statusCode: {
+						404: function() {
+						  alert( "Page not found" );
+						}
+					}
+				}).done(function() {
+					$.when($('#orderSeedsModal #orderPlaceForm').fadeOut(500)).done(function() {
+						$('#orderSeedsModal #reviewOrder').html('<p><b>Amount:</b> ' + amount_desc + "</p>" + '<p><b>Type: </b>' + type_desc + "</p>" + '<p><b>Share part of this purchase:</b> ' + share_desc + "</p>");
+						if (note.length > 0) {
+							$('#orderSeedsModal #reviewOrder').append("<p>Note: " + note + "</p>");
+						}
+						$('#orderSeedsModal #orderPlacedMsg').fadeIn();
+						$('#orderSeedsModal #orderSeedsSubmitBtn').hide();
+					});
+				});
+			}
+			function resetOrderSeedForm() {
+				$('#orderSeedsModal #reviewOrder').html('');
+				$('#orderSeedsModal #orderPlacedMsg').hide();
+				$('#orderSeedsModal #orderSeedsSubmitBtn').show();
+				$('#orderSeedsModal #orderPlaceForm').show();
+			}
         </script>
+		<div class="modal fade" tabindex="-1" role="dialog" id="chatModal" title="Live Chat" data-backdrop="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">			
+				<button id="closeLiveChatBtn" type="button" class="close" aria-label="Close" data-toggle="modal" data-target="" data-dismiss="modal" title="End Chat"><span aria-hidden="true">&times;</span></button>
+				<button type="button" class="minimize" data-dismiss="modal" aria-label="Minimize" title="Minimize Chat"><span aria-hidden="true">-</span></button>
+				<h4 class="modal-title">Live Chat</h4>
+			  </div>
+			  <div class="modal-body">
+				<p></p>
+			  </div>
+			  <div class="modal-footer">
+				<form id="chatForm" action="">
+				  <input id="chatMessage" autocomplete="off" />
+				</form>
+				<div id="sendMessageDiv">
+					<button id="sendMessageBtn" type="button" class="btn btn-primary">Send</button>
+				</div>
+			  </div>
+			</div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		<div class="modal fade" tabindex="-1" role="dialog" id="endChatModal" title="End Chat" data-backdrop="false">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">End Chat</h4>
+			  </div>
+			  <div class="modal-body">
+				<p>This will end communication with the representative.</p>
+				<p>Would you like to continue?</p>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Return to Chat</button>
+				<button type="button" class="btn btn-primary btn-default" onclick="closeChat()">End Chat</button>
+				</div>
+			  </div>
+			</div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		<div class="modal fade" tabindex="-1" role="dialog" id="orderSeedsModal" title="Order Seeds Online" data-backdrop="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Order Seeds Online</h4>
+			  </div>
+			  <div class="modal-body">
+				<div id="orderPlaceForm">
+					<p>PURCHASE AMOUNT - Click & choose carefully below. +49¢ postage</p>
+					<p>
+						<select name="seed_amount">
+							<option value="150">150 seeds + instructions $3.00 USD</option>
+							<option value="250">250 seeds + instructions $5.00 USD</option>
+							<option value="500">500 seeds + instructions $10.00 USD</option>
+							<option value="1000">1000 seeds &amp; Thank You Letter + basic info pack $20.00 USD</option>
+							<option value="2000">2000 seeds &amp; Thank you Letter + extras to share, Tracked S&amp;H $40.00 USD</option>
+							<option value="Silver Patron">*Silver Patron* 1000 seeds &amp; letter - we share 400 packs. $100.00 USD</option>
+							<option value="Gold Patron">*Gold Patron*  1000 seeds &amp; letter - 2,000 packs shared w others $500.00 USD</option>
+						</select>
+					</p>
+					<p>Seed Types - Choose best for your area.</p>
+					<p>
+						<select name="seed_type">
+							<option value="Northern">Northern - Syriaca &amp; Speciosa germinate &lt;30 days </option>
+							<option value="Southern">Southern - Curassavica germinate &lt;14 days </option>
+							<option value="Mixed">Mixed - 25 types for all pollinators, includes Milkweed too </option>
+							<option value="Pack of Each">A pack of each type we offer - @ $5 and above please </option>
+							<option value="Staff Choice">STAFF CHOICE - We pick the best for your area. </option>
+						</select>
+					</p>
+					<p>Share part of this purchase with others? * Make a contribution *</p>
+					<p>
+						<select name="seed_share">
+							<option value="No Sharing">Not at this time: I need ALL my seeds. </option>
+							<option value="No Seeds">Please send me NOTHING. This is a pure donation. </option>
+							<option value="Little">Send me a LITTLE and share my contribution with others. </option>
+							<option value="Half">Send me HALF and share the rest with others. </option>
+							<option value="Extra">Send me EXTRA!  I have hungry Monarchs to feed. HURRY UP :) </option>
+						</select>
+					</p>
+					<p>Note for us:</p>
+					<p><textarea name="order_seeds_note" style="width:100%" rows="5"></textarea></p>
+				  </div>
+				  <div id="orderPlacedMsg">
+					<p>Thank you, your order has been placed.</p>
+					<div id="reviewOrder"></div>
+				  </div>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" id="orderSeedsSubmitBtn" onclick="orderSeeds()">Order</button>
+				</div>
+			  </div>
+			</div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
     </body>
 </html>

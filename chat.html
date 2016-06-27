@@ -1,0 +1,67 @@
+<script src="/socket.io/socket.io.js"></script>
+<link rel="stylesheet" href="css/chat.css">
+<script>
+	var socket = null;
+	var chatAddAreYouSure = true;
+	
+	$('#startChatBtn').click (checkIfConnected);
+	
+	function checkIfConnected() {
+		if (socket === null || !socket.connected) startChat();
+	}
+	
+	function startChat() {
+		socket = io();
+		$('#chatForm').submit(function(e){
+			sendChatMessage();
+			return false;
+		});
+		$('#sendMessageBtn').click (function() {
+			sendChatMessage();
+		});
+		socket.on('chat message', function(msg){
+			$('#messages').append($('<li>').text(msg));
+		});
+	}
+	
+	function sendChatMessage() {
+		var chatMessage = $.trim($('#chatMessage').val());
+		if (chatMessage.length > 0) {
+			if (chatAddAreYouSure) {
+				addAreYouSure(); // Warn user that a chat is open on window unload
+			}
+			socket.emit('chat message', chatMessage);
+		}
+		$('#chatMessage').val('');
+	}
+
+	function closeChat() {
+		$('#chatModal, #endChatModal').modal('hide');
+		$('#chatModal #messages').empty();
+		socket.close(); // Close connection
+		removeAreYouSure(); // Remove warning on window unload
+	}
+	
+	function addAreYouSure() {
+	alert("are you sure");
+		window.addEventListener("beforeunload", areYouSure);
+		$('#closeLiveChatBtn').attr('data-target', '#endChatModal').removeAttr('data-dismiss');
+		chatAddAreYouSure = false;
+	}
+	
+	function removeAreYouSure() {
+		window.removeEventListener("beforeunload", areYouSure);
+		$('#closeLiveChatBtn').attr('data-target', '').attr('data-dismiss', 'modal');
+		chatAddAreYouSure = true;
+	}
+	
+	function areYouSure(e) {
+	alert("procced areyousure");
+		var confirmationMessage = 'You have a chat currently open with an expert. '
+								+ 'If you leave, the chat will end and your chat history will be lost.';
+
+		(e || window.event).returnValue = confirmationMessage; //Gecko + IE
+		return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+	}
+</script>
+<ul id="messages"></ul>
