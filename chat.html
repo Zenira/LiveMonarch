@@ -2,66 +2,107 @@
 <link rel="stylesheet" href="css/chat.css">
 <script>
 	var socket = null;
-	var chatAddAreYouSure = true;
-	
-	$('#startChatBtn').click (checkIfConnected);
-	
-	function checkIfConnected() {
-		if (socket === null || !socket.connected) startChat();
-	}
-	
-	function startChat() {
-		socket = io();
-		$('#chatForm').submit(function(e){
-			sendChatMessage();
-			return false;
-		});
-		$('#sendMessageBtn').click (function() {
-			sendChatMessage();
-		});
-		socket.on('chat message', function(msg){
-			$('#messages').append($('<li>').text(msg));
-		});
-	}
-	
-	function sendChatMessage() {
-		var chatMessage = $.trim($('#chatMessage').val());
-		if (chatMessage.length > 0) {
-			if (chatAddAreYouSure) {
-				addAreYouSure(); // Warn user that a chat is open on window unload
-			}
-			socket.emit('chat message', chatMessage);
-		}
-		$('#chatMessage').val('');
-	}
-
+	var port = 3000;
+	var onLeaveAlert = true;
+	var userName = '';
+	var beforeLeaveHandler = function() {
+		return 'Would you like to close chat?';
+	};
+		
 	function closeChat() {
 		$('#chatModal, #endChatModal').modal('hide');
 		$('#chatModal #messages').empty();
 		socket.close(); // Close connection
-		removeAreYouSure(); // Remove warning on window unload
+		removeOnLeaveAlert();
 	}
-	
-	function addAreYouSure() {
-	alert("are you sure");
-		window.addEventListener("beforeunload", areYouSure);
-		$('#closeLiveChatBtn').attr('data-target', '#endChatModal').removeAttr('data-dismiss');
-		chatAddAreYouSure = false;
-	}
-	
-	function removeAreYouSure() {
-		window.removeEventListener("beforeunload", areYouSure);
-		$('#closeLiveChatBtn').attr('data-target', '').attr('data-dismiss', 'modal');
-		chatAddAreYouSure = true;
-	}
-	
-	function areYouSure(e) {
-	alert("procced areyousure");
-		var confirmationMessage = 'You have a chat currently open with an expert. '
-								+ 'If you leave, the chat will end and your chat history will be lost.';
+	$(document).ready (function() {
+		var $form = $('#chatForm');
+		var $field = $('#chatMessage');
+		var $sendButton = $('#sendMessageBtn');
+		var $content = $('#messages');
+		var $closeLiveChatBtn = $('#closeLiveChatBtn');
+		var $userName = $('#chatUserName');
+		
+		// Open chat window on click
+		//$('#startChatBtn').click (startChat);
+		
+		$('#chatInitBtn').click (processUserName);
+		$userName.keyup(function(e) {
+			if(e.keyCode == 13) {
+				processUserName();
+			}
+		});
 
-		(e || window.event).returnValue = confirmationMessage; //Gecko + IE
-		return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-	}
+		$form.submit(function(e){
+			sendChatMessage();
+			return false;
+		});
+		
+		$sendButton.click (function() {
+			sendChatMessage();
+		});
+		
+		function sendChatMessage() {		
+			var chatMessage = $.trim($field.val());
+			if (chatMessage.length > 0) {
+				if (onLeaveAlert) addOnLeaveAlert();
+				socket.emit('send', { message: chatMessage });
+			}
+			$field.val('');
+		}
+		
+		function startChat() {
+			if (socket === null || !socket.connected) {
+				socket = io.connect('http://localhost:'+port);
+				
+				// Handle message event
+				socket.on('message', function (data) {
+					if(data.message) {
+						$content.append($('<li class="self">').html(data.message));
+					} 
+					else if (data.username) {
+						console.log("username: " + data.username);
+					}
+					else {
+						console.log("No message: ", data);
+					}
+				});
+				
+				
+				socket.emit('send', { username: userName });
+				
+
+			}
+		}
+		
+		function addOnLeaveAlert() {
+			onLeaveAlert = false;
+			$closeLiveChatBtn.attr('data-target', '#endChatModal').removeAttr('data-dismiss');
+			$(window).bind('beforeunload', beforeLeaveHandler);
+		}
+		function removeOnLeaveAlert() {
+			onLeaveAlert = true;
+			$closeLiveChatBtn.attr('data-target', '').attr('data-dismiss', 'modal');
+			$(window).unbind('beforeunload', beforeLeaveHandler);
+		}
+		
+		function processUserName() {
+			userName = $.trim($userName.val());
+			if(userName == "") {
+				$('#userNameDiv .chatError').fadeIn();
+			} else {
+				$('#userNameDiv, #userNameDiv .chatError').hide('fast', function() {
+					$('#chatFormDiv').fadeIn();				
+				});
+				startChat();
+			}
+		}
+	});
 </script>
+<div id="userNameDiv">
+	Your Name:
+	<input type="name" id="chatUserName">
+	<input type="button" id="chatInitBtn" value="Start Chat">
+	<span class="chatError">Please enter your name</span>
+</div>
 <ul id="messages"></ul>
