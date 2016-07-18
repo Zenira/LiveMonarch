@@ -66,7 +66,7 @@
           <h2>We need your help - plant milkweed everywhere!</h2>
 		  <p>There are two ways to receive milkweed seeds:</p>
 		  <h4>Online Order</h4>
-		  <p><a class="btn btn-default" href="#" role="button" id="orderSeedsBtn" data-toggle="modal" data-target="#orderSeedsModal" onclick="resetOrderSeedForm()">Order seeds &raquo;</a></p>
+		  <p><a class="btn btn-primary" href="#" role="button" id="orderSeedsBtn" data-toggle="modal" data-target="#orderSeedsModal" onclick="resetOrderSeedForm()">Order seeds &raquo;</a></p>
 		  <h4>Mail</h4>
           <p>Send a self addressed, stamped envelope for <strong>Milkweed or mixed seeds</strong> appropriate for your area to:</p>
           <p id="address">Live Monarch - Seed Campaign <span class="year"></span><br />
@@ -129,29 +129,6 @@
 				var amount_desc = $('#orderPlaceForm select[name="seed_amount"] option:selected').text();
 				var type_desc = $('#orderPlaceForm select[name="seed_type"] option:selected').text();
 				var share_desc = $('#orderPlaceForm select[name="seed_share"] option:selected').text();
-				$.ajax({
-					url: "orderSeeds.php",
-					data: {
-						amount: amount,
-						type: type,
-						share: share,
-						note: note
-					},
-					statusCode: {
-						404: function() {
-						  alert( "Page not found" );
-						}
-					}
-				}).done(function() {
-					$.when($('#orderSeedsModal #orderPlaceForm').fadeOut(500)).done(function() {
-						$('#orderSeedsModal #reviewOrder').html('<p><b>Amount:</b> ' + amount_desc + "</p>" + '<p><b>Type: </b>' + type_desc + "</p>" + '<p><b>Share part of this purchase:</b> ' + share_desc + "</p>");
-						if (note.length > 0) {
-							$('#orderSeedsModal #reviewOrder').append("<p>Note: " + note + "</p>");
-						}
-						$('#orderSeedsModal #orderPlacedMsg').fadeIn();
-						$('#orderSeedsModal #orderSeedsSubmitBtn').hide();
-					});
-				});
 			}
 			function resetOrderSeedForm() {
 				$('#orderSeedsModal #reviewOrder').html('');
@@ -220,6 +197,7 @@
 					<p>PURCHASE AMOUNT - Click & choose carefully below. +49¢ postage</p>
 					<p>
 						<select name="seed_amount">
+							<option value="">- Select -</option>
 							<option value="150">150 seeds + instructions $3.00 USD</option>
 							<option value="250">250 seeds + instructions $5.00 USD</option>
 							<option value="500">500 seeds + instructions $10.00 USD</option>
@@ -232,6 +210,7 @@
 					<p>Seed Types - Choose best for your area.</p>
 					<p>
 						<select name="seed_type">
+							<option value="">- Select -</option>
 							<option value="Northern">Northern - Syriaca &amp; Speciosa germinate &lt;30 days </option>
 							<option value="Southern">Southern - Curassavica germinate &lt;14 days </option>
 							<option value="Mixed">Mixed - 25 types for all pollinators, includes Milkweed too </option>
@@ -242,6 +221,7 @@
 					<p>Share part of this purchase with others? * Make a contribution *</p>
 					<p>
 						<select name="seed_share">
+							<option value="">- Select -</option>
 							<option value="No Sharing">Not at this time: I need ALL my seeds. </option>
 							<option value="No Seeds">Please send me NOTHING. This is a pure donation. </option>
 							<option value="Little">Send me a LITTLE and share my contribution with others. </option>

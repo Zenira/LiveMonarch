@@ -13,6 +13,10 @@
 		$('#chatModal, #endChatModal').modal('hide');
 		$('#chatModal #messages').empty();
 		socket.close(); // Close connection
+		
+		// Can't call this function, but if closeChat is put in the
+		// document.ready then it can't be called from the client
+		// script either...
 		removeOnLeaveAlert();
 	}
 	$(document).ready (function() {
@@ -23,10 +27,8 @@
 		var $closeLiveChatBtn = $('#closeLiveChatBtn');
 		var $userName = $('#chatUserName');
 		
-		// Open chat window on click
-		//$('#startChatBtn').click (startChat);
-		
 		$('#chatInitBtn').click (processUserName);
+		
 		$userName.keyup(function(e) {
 			if(e.keyCode == 13) {
 				processUserName();
@@ -51,14 +53,15 @@
 			$field.val('');
 		}
 		
-		function startChat() {
+		function startChat(userName) {
 			if (socket === null || !socket.connected) {
-				socket = io.connect('http://localhost:'+port);
+				socket = io.connect('http://localhost:'+port, {query: "userName="+userName});
 				
 				// Handle message event
 				socket.on('message', function (data) {
 					if(data.message) {
 						$content.append($('<li class="self">').html(data.message));
+						scrollToBottom();
 					} 
 					else if (data.username) {
 						console.log("username: " + data.username);
@@ -68,10 +71,7 @@
 					}
 				});
 				
-				
 				socket.emit('send', { username: userName });
-				
-
 			}
 		}
 		
@@ -94,8 +94,25 @@
 				$('#userNameDiv, #userNameDiv .chatError').hide('fast', function() {
 					$('#chatFormDiv').fadeIn();				
 				});
-				startChat();
+				userExists(userName);
+				$("#chatMessage").focus(); // Focus on the input for chat
+				startChat(userName);
 			}
+		}
+		
+		// Check if the name entered is a username in the database
+		// If so, check if user has administrative privileges
+		function userExists(userName) {
+			$.get('/users/:username', {'username': userName}).done(function(data){
+				if (data.privilege !== "none") {
+					console.log("Privileged user");
+				}
+			});
+		}
+		
+		// As the chat text fills up, keep scrolled to the bottom
+		function scrollToBottom() {
+			$('#messages').scrollTop($('#messages')[0].scrollHeight);
 		}
 	});
 </script>
