@@ -1,0 +1,27 @@
+{
+  "name": "livemonarch",
+  "version": "1.0.0",
+  "description": "Live Monarch website",
+  "main": "app.js",
+  "scripts": {
+	"build": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zenira/LiveMonarch.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zenira/LiveMonarch/issues"
+  },
+  "homepage": "https://github.com/Zenira/LiveMonarch#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongodb": "^2.2.4",
+    "monk": "^3.0.7",
+    "path": "^0.12.7",
+    "socket.io": "^1.4.8"
+  }
+}
