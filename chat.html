@@ -80,11 +80,6 @@
 			$closeLiveChatBtn.attr('data-target', '#endChatModal').removeAttr('data-dismiss');
 			$(window).bind('beforeunload', beforeLeaveHandler);
 		}
-		function removeOnLeaveAlert() {
-			onLeaveAlert = true;
-			$closeLiveChatBtn.attr('data-target', '').attr('data-dismiss', 'modal');
-			$(window).unbind('beforeunload', beforeLeaveHandler);
-		}
 		
 		function processUserName() {
 			userName = $.trim($userName.val());

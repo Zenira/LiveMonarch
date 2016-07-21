@@ -120,6 +120,12 @@
 				$('#chatModal .modal-body').load('chat.html');
             });
 			
+			function removeOnLeaveAlert() {
+				onLeaveAlert = true;
+				$('#closeLiveChatBtn').attr('data-target', '').attr('data-dismiss', 'modal');
+				$(window).unbind('beforeunload', beforeLeaveHandler);
+			}
+			
 			function orderSeeds() {
 				var amount = $('#orderPlaceForm select[name="seed_amount"] option:selected').val();
 				var type = $('#orderPlaceForm select[name="seed_type"] option:selected').val();
