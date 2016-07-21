@@ -4,7 +4,6 @@
 #
 # How to run:
 #
-# 1. Make sure you have node, nodemon, express, and mongodb installed
-# 2. Run mongod
-# 3. In another command window, navigate to the folder and run "nodemon app.js"
-# 4. The website will run on port 3000. When the server output says "listening on port 3000", go to http://localhost:3000/ to view the website.
+# 1. To run the website, run the command "npm install".
+# 2. Run the command "npm run build".
+# 3. The website will run on port 3000. When the server output says "listening on port 3000", go to http://localhost:3000/ to view the website.
