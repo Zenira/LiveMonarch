@@ -13,6 +13,7 @@ app.get("/", function(req, res) {
 	res.sendFile(mainPath + '/index.html');
 });
 
+// Sets up the router for getting user info from the database
 app.get('/users/:username', function(req, res) {
 	var db = monk('localhost:27017/liveMonarch');
     var collection = db.get('user');
@@ -28,6 +29,29 @@ app.get('/users/:username', function(req, res) {
 				privilege: "none"
 			});
 		}
+		db.close();
+	});
+});
+
+// Sets up the router for adding an order
+app.get('/orders', function(req, res) {
+	var db = monk('localhost:27017/liveMonarch');
+    var collection = db.get('order');
+	var amount = req.query.amount;
+	var type = req.query.type;
+	var share = req.query.share;
+	var note = req.query.note;
+	
+	var newOrder = {
+		seed_amount: amount,
+		seed_type: type,
+		seed_share: share,
+		note: note
+	};
+	collection.insert(newOrder, function() {
+		res.send({
+			complete: true
+		});
 		db.close();
 	});
 });

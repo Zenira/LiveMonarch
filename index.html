@@ -129,6 +129,23 @@
 				var amount_desc = $('#orderPlaceForm select[name="seed_amount"] option:selected').text();
 				var type_desc = $('#orderPlaceForm select[name="seed_type"] option:selected').text();
 				var share_desc = $('#orderPlaceForm select[name="seed_share"] option:selected').text();
+				
+				addOrder(amount, type, share, note);
+				
+				// Display message
+				$.when($('#orderSeedsModal #orderPlaceForm').fadeOut(500)).done(function() {
+					$('#orderSeedsModal #reviewOrder').html('<p><b>Amount:</b> ' + amount_desc + "</p>" + '<p><b>Type: </b>' + type_desc + "</p>" + '<p><b>Share part of this purchase:</b> ' + share_desc + "</p>");
+					if (note.length > 0) {
+						$('#orderSeedsModal #reviewOrder').append("<p>Note: " + note + "</p>");
+					}
+					$('#orderSeedsModal #orderPlacedMsg').fadeIn();
+					$('#orderSeedsModal #orderSeedsSubmitBtn').hide();
+				 });
+			}
+			function addOrder(amount, type, share, note) {			
+				$.get('/orders', {'amount': amount, 'type': type, 'share': share, 'note': note}).done(function(data){
+					console.log("order complete");
+				});
 			}
 			function resetOrderSeedForm() {
 				$('#orderSeedsModal #reviewOrder').html('');
